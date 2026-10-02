@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Izmena mehaničara</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #374151;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>✏️ Izmeni mehaničara</h1>
+
+        <form
+            method="POST"
+        >
+
+            <label>
+                Ime
+            </label>
+
+            <input
+                type="text"
+                name="ime"
+                value="{{ mechanic['ime'] }}"
+                required
+            >
+
+
+            <label>
+                Prezime
+            </label>
+
+            <input
+                type="text"
+                name="prezime"
+                value="{{ mechanic['prezime'] }}"
+                required
+            >
+
+
+            <label>
+                Telefon
+            </label>
+
+            <input
+                type="text"
+                name="telefon"
+                value="{{ mechanic['telefon'] or '' }}"
+            >
+
+
+            <label>
+                Specijalizacija
+            </label>
+
+            <input
+                type="text"
+                name="specijalizacija"
+                value="{{ mechanic['specijalizacija'] or '' }}"
+            >
+
+
+            <button type="submit">
+                💾 Sačuvaj izmene
+            </button>
+
+        </form>
+
+        <a
+            href="/mehanicari"
+            class="back"
+        >
+            ← Nazad na mehaničare
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
+
+
+

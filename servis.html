@@ -1,0 +1,1927 @@
+
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Servis - {{ vehicle['marka'] }} {{ vehicle['model'] }}</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f3f6fa;
+
+            color: #222;
+        }
+
+        .container {
+
+            width: 95%;
+
+            max-width: 1200px;
+
+            margin: 30px auto;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+
+            background: linear-gradient(
+                135deg,
+                #1f2937,
+                #374151
+            );
+
+            color: white;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .header h1 {
+
+            margin: 0 0 10px 0;
+
+            font-size: 30px;
+        }
+
+        .header p {
+
+            margin: 5px 0;
+
+            font-size: 16px;
+
+            color: #e5e7eb;
+        }
+
+        /* =========================
+           NAVIGACIJA
+        ========================= */
+
+        .navigation {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 25px;
+        }
+
+        .navigation a {
+
+            text-decoration: none;
+        }
+
+        .nav-button {
+
+            display: inline-block;
+
+            padding: 12px 18px;
+
+            background: #2563eb;
+
+            color: white;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .nav-button:hover {
+
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.07);
+        }
+
+        .card h2 {
+
+            margin-top: 0;
+
+            color: #1f2937;
+        }
+
+        /* =========================
+           PODACI O VOZILU
+        ========================= */
+
+        .vehicle-info {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 15px;
+        }
+
+        .info-box {
+
+            background: #f8fafc;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 12px;
+
+            padding: 15px;
+        }
+
+        .info-box span {
+
+            display: block;
+
+            font-size: 13px;
+
+            color: #6b7280;
+
+            margin-bottom: 5px;
+        }
+
+        .info-box strong {
+
+            font-size: 17px;
+        }
+
+        /* =========================
+           FORME
+        ========================= */
+
+        label {
+
+            display: block;
+
+            margin-top: 15px;
+
+            margin-bottom: 6px;
+
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            background: white;
+        }
+
+        textarea {
+
+            min-height: 100px;
+
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            outline: none;
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37,99,235,0.10);
+        }
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 15px;
+        }
+
+        .form-group label {
+
+            margin-top: 0;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        button {
+
+            border: none;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            border-radius: 9px;
+
+            padding: 11px 17px;
+
+            transition: 0.2s;
+        }
+
+        .primary-button {
+
+            background: #2563eb;
+
+            color: white;
+
+            margin-top: 20px;
+        }
+
+        .primary-button:hover {
+
+            background: #1d4ed8;
+        }
+
+        .green-button {
+
+            background: #16a34a;
+
+            color: white;
+        }
+
+        .green-button:hover {
+
+            background: #15803d;
+        }
+
+        .red-button {
+
+            background: #dc2626;
+
+            color: white;
+        }
+
+        .red-button:hover {
+
+            background: #b91c1c;
+        }
+
+        .gray-button {
+
+            background: #6b7280;
+
+            color: white;
+        }
+
+        .gray-button:hover {
+
+            background: #4b5563;
+        }
+
+        /* =========================
+           DELOVI
+        ========================= */
+
+        .part-row {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 130px 50px;
+
+            gap: 10px;
+
+            align-items: center;
+
+            margin-bottom: 10px;
+        }
+
+        .remove-part {
+
+            background: #dc2626;
+
+            color: white;
+
+            width: 45px;
+
+            height: 45px;
+
+            padding: 0;
+        }
+
+        .add-part-button {
+
+            margin-top: 10px;
+
+            background: #16a34a;
+
+            color: white;
+        }
+
+        /* =========================
+           CENE
+        ========================= */
+
+        .price-box {
+
+            margin-top: 20px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e5e7eb;
+
+            padding: 20px;
+
+            border-radius: 12px;
+        }
+
+        .price-line {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 8px 0;
+
+            font-size: 16px;
+        }
+
+        .total-line {
+
+            border-top: 2px solid #d1d5db;
+
+            margin-top: 10px;
+
+            padding-top: 15px;
+
+            font-size: 22px;
+
+            font-weight: bold;
+        }
+
+        /* =========================
+           SERVISNI NALOZI
+        ========================= */
+
+        .order {
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            margin-bottom: 18px;
+
+            background: #ffffff;
+        }
+
+        .order-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 15px;
+        }
+
+        .order-header h3 {
+
+            margin: 0;
+
+            color: #1f2937;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+        .status-primljen {
+
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+        .status-u-radu {
+
+            background: #dbeafe;
+
+            color: #1e40af;
+        }
+
+        .status-zavrsen {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+        .status-preuzet {
+
+            background: #e5e7eb;
+
+            color: #111827;
+        }
+
+        .order-info {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 12px;
+
+            margin-bottom: 15px;
+        }
+
+        .order-info-box {
+
+            background: #f8fafc;
+
+            padding: 12px;
+
+            border-radius: 10px;
+        }
+
+        .order-info-box span {
+
+            display: block;
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+        /* =========================
+           KORIŠĆENI DELOVI
+        ========================= */
+
+        .used-parts {
+
+            margin-top: 15px;
+
+            padding: 15px;
+
+            background: #f8fafc;
+
+            border-radius: 12px;
+        }
+
+        .used-part {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            padding: 10px 0;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .used-part:last-child {
+
+            border-bottom: none;
+        }
+
+        /* =========================
+           STATUS FORMA
+        ========================= */
+
+        .status-form {
+
+            display: flex;
+
+            gap: 10px;
+
+            align-items: center;
+
+            margin-top: 18px;
+
+            flex-wrap: wrap;
+        }
+
+        .status-form select {
+
+            max-width: 250px;
+        }
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            margin-top: 15px;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #6b7280;
+
+            background: #f8fafc;
+
+            border-radius: 12px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .part-row {
+
+                grid-template-columns: 1fr;
+            }
+
+            .remove-part {
+
+                width: 100%;
+            }
+
+            .used-part {
+
+                flex-direction: column;
+            }
+
+            .container {
+
+                width: 92%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <div class="header">
+
+        <h1>
+            🔧 Servis vozila
+        </h1>
+
+        <p>
+            {{ vehicle['marka'] }}
+            {{ vehicle['model'] }}
+            —
+            {{ vehicle['registracija'] }}
+        </p>
+
+    </div>
+
+
+    <!-- =========================================
+         NAVIGACIJA
+    ========================================== -->
+
+    <div class="navigation">
+
+        <a href="/">
+            <span class="nav-button">
+                🚗 Vozila
+            </span>
+        </a>
+
+        <a href="/mehanicari">
+            <span class="nav-button">
+                👨‍🔧 Mehaničari
+            </span>
+        </a>
+
+        <a href="/delovi">
+            <span class="nav-button">
+                📦 Lager
+            </span>
+        </a>
+
+        <a href="/dashboard">
+            <span class="nav-button">
+                📊 Dashboard
+            </span>
+        </a>
+
+    </div>
+
+
+    <!-- =========================================
+         PODACI O VOZILU
+    ========================================== -->
+
+    <div class="card">
+
+        <h2>
+            🚗 Podaci o vozilu
+        </h2>
+
+        <div class="vehicle-info">
+
+            <div class="info-box">
+
+                <span>Marka</span>
+
+                <strong>
+                    {{ vehicle['marka'] }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>Model</span>
+
+                <strong>
+                    {{ vehicle['model'] }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>Registracija</span>
+
+                <strong>
+                    {{ vehicle['registracija'] }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>Godište</span>
+
+                <strong>
+                    {{ vehicle['godiste'] or '-' }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>Kilometraža</span>
+
+                <strong>
+                    {{ vehicle['kilometraza'] or '-' }} km
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>Vlasnik</span>
+
+                <strong>
+                    {{ vehicle['vlasnik'] }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         NOVI SERVISNI NALOG
+    ========================================== -->
+
+    <div class="card">
+
+        <h2>
+            📝 Novi servisni nalog
+        </h2>
+
+        <form
+            action="/dodaj-nalog/{{ vehicle['id'] }}"
+            method="POST"
+            id="service-order-form"
+        >
+
+
+            <!-- DATUM + STATUS -->
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>
+                        📅 Datum
+                    </label>
+
+                    <input
+                        type="date"
+                        name="datum"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        🔄 Status
+                    </label>
+
+                    <select
+                        name="status"
+                        required
+                    >
+
+                        <option value="Primljen">
+                            🟠 Primljen
+                        </option>
+
+                        <option value="U radu">
+                            🔵 U radu
+                        </option>
+
+                        <option value="Završen">
+                            🟢 Završen
+                        </option>
+
+                        <option value="Preuzet">
+                            ⚫ Preuzet
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROBLEM -->
+
+            <label>
+                🔧 Problem / opis kvara
+            </label>
+
+            <textarea
+                name="problem"
+                placeholder="Opišite problem ili kvar na vozilu..."
+                required
+            ></textarea>
+
+
+            <!-- MEHANIČAR -->
+
+            <label>
+                👨‍🔧 Mehaničar
+            </label>
+
+            <select name="mehanicar_id">
+
+                <option value="">
+                    -- Izaberi mehaničara --
+                </option>
+
+                {% for mechanic in mechanics %}
+
+                    <option value="{{ mechanic['id'] }}">
+
+                        {{ mechanic['ime'] }}
+                        {{ mechanic['prezime'] }}
+
+                        {% if mechanic['specijalizacija'] %}
+
+                            -
+                            {{ mechanic['specijalizacija'] }}
+
+                        {% endif %}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <!-- DELOVI -->
+
+            <label>
+                📦 Delovi
+            </label>
+
+            <div id="parts-container">
+
+
+                <div class="part-row">
+
+
+                    <select
+                        name="part_id"
+                        class="part-select"
+                        onchange="azurirajCenu()"
+                    >
+
+                        <option value="">
+                            -- Izaberi deo --
+                        </option>
+
+
+                        {% for part in parts %}
+
+                            <option
+                                value="{{ part['id'] }}"
+                                data-price="{{ part['cena'] }}"
+                                data-stock="{{ part['kolicina'] }}"
+                            >
+
+                                {{ part['naziv'] }}
+
+                                {% if part['proizvodjac'] %}
+
+                                    -
+                                    {{ part['proizvodjac'] }}
+
+                                {% endif %}
+
+                                |
+
+                                {{ "%.2f"|format(part['cena']) }}
+
+                                RSD
+
+                                | Lager:
+                                {{ part['kolicina'] }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+
+                    <input
+                        type="number"
+                        name="part_kolicina"
+                        class="part-quantity"
+                        min="1"
+                        value="1"
+                        onchange="azurirajCenu()"
+                    >
+
+
+                    <button
+                        type="button"
+                        class="remove-part"
+                        onclick="obrisiRed(this)"
+                    >
+                        🗑️
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="add-part-button"
+                onclick="dodajRed()"
+            >
+                ➕ Dodaj još jedan deo
+            </button>
+
+
+            <!-- CENA RADA -->
+
+            <label>
+                💵 Cena rada
+            </label>
+
+            <input
+                type="number"
+                name="cena_rada"
+                id="cena-rada"
+                min="0"
+                step="0.01"
+                value="0"
+                onchange="azurirajCenu()"
+            >
+
+
+            <!-- CENE -->
+
+            <div class="price-box">
+
+
+                <div class="price-line">
+
+                    <span>
+                        📦 Cena delova:
+                    </span>
+
+                    <strong>
+                        <span id="cena-delova">
+                            0.00
+                        </span>
+                        RSD
+                    </strong>
+
+                </div>
+
+
+                <div class="price-line">
+
+                    <span>
+                        🔧 Cena rada:
+                    </span>
+
+                    <strong>
+                        <span id="prikaz-cena-rada">
+                            0.00
+                        </span>
+                        RSD
+                    </strong>
+
+                </div>
+
+
+                <div class="price-line total-line">
+
+                    <span>
+                        💰 UKUPNO:
+                    </span>
+
+                    <strong>
+                        <span id="ukupna-cena">
+                            0.00
+                        </span>
+                        RSD
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-button"
+            >
+                💾 Kreiraj servisni nalog
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================================
+         POSTOJEĆI SERVISNI NALOZI
+    ========================================== -->
+
+    <div class="card">
+
+        <h2>
+            📋 Servisni nalozi
+        </h2>
+
+
+        {% if service_orders %}
+
+
+            {% for order in service_orders %}
+
+
+                <div class="order">
+
+
+                    <!-- HEADER NALOGA -->
+
+                    <div class="order-header">
+
+                        <h3>
+                            🔧 Servisni nalog #{{ order['id'] }}
+                        </h3>
+
+
+                        {% if order['status'] == 'Primljen' %}
+
+                            <span class="status status-primljen">
+                                🟠 Primljen
+                            </span>
+
+                        {% elif order['status'] == 'U radu' %}
+
+                            <span class="status status-u-radu">
+                                🔵 U radu
+                            </span>
+
+                        {% elif order['status'] == 'Završen' %}
+
+                            <span class="status status-zavrsen">
+                                🟢 Završen
+                            </span>
+
+                        {% elif order['status'] == 'Preuzet' %}
+
+                            <span class="status status-preuzet">
+                                ⚫ Preuzet
+                            </span>
+
+                        {% else %}
+
+                            <span class="status status-primljen">
+                                🟠 Primljen
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- PODACI NALOGA -->
+
+                    <div class="order-info">
+
+
+                        <div class="order-info-box">
+
+                            <span>
+                                📅 Datum
+                            </span>
+
+                            <strong>
+                                {{ order['datum'] }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-info-box">
+
+                            <span>
+                                👨‍🔧 Mehaničar
+                            </span>
+
+                            <strong>
+                                {{ order['mehanicar'] or '-' }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-info-box">
+
+                            <span>
+                                📦 Cena delova
+                            </span>
+
+                            <strong>
+                                {{ "%.2f"|format(order['cena_delova'] or 0) }}
+                                RSD
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-info-box">
+
+                            <span>
+                                🔧 Cena rada
+                            </span>
+
+                            <strong>
+                                {{ "%.2f"|format(order['cena_rada'] or 0) }}
+                                RSD
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-info-box">
+
+                            <span>
+                                💰 Ukupno
+                            </span>
+
+                            <strong>
+                                {{ "%.2f"|format(order['ukupna_cena'] or 0) }}
+                                RSD
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- PROBLEM -->
+
+                    <div class="used-parts">
+
+                        <strong>
+                            🔧 Problem / opis:
+                        </strong>
+
+                        <p>
+                            {{ order['problem'] or '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <!-- KORIŠĆENI DELOVI -->
+
+                    {% if order_parts[order['id']] %}
+
+
+                        <div class="used-parts">
+
+                            <h3>
+                                📦 Iskorišćeni delovi
+                            </h3>
+
+
+                            {% for item in order_parts[order['id']] %}
+
+
+                                <div class="used-part">
+
+
+                                    <div>
+
+                                        <strong>
+                                            {{ item['naziv'] }}
+                                        </strong>
+
+                                        {% if item['proizvodjac'] %}
+
+                                            <span>
+                                                —
+                                                {{ item['proizvodjac'] }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <div>
+
+                                        {{ item['kolicina'] }}
+                                        ×
+                                        {{ "%.2f"|format(item['cena']) }}
+                                        RSD
+
+                                        =
+
+                                        <strong>
+                                            {{
+                                                "%.2f"|format(
+                                                    item['kolicina']
+                                                    *
+                                                    item['cena']
+                                                )
+                                            }}
+                                            RSD
+                                        </strong>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            {% endfor %}
+
+
+                        </div>
+
+
+                    {% else %}
+
+
+                        <div class="used-parts">
+
+                            📦 Nema iskorišćenih delova.
+
+                        </div>
+
+
+                    {% endif %}
+
+
+                    <!-- PROMENA STATUSA -->
+
+                    <form
+                        action="/promeni-status/{{ order['id'] }}"
+                        method="POST"
+                        class="status-form"
+                    >
+
+                        <strong>
+                            🔄 Promeni status:
+                        </strong>
+
+
+                        <select name="status">
+
+
+                            <option
+                                value="Primljen"
+                                {% if order['status'] == 'Primljen' %}
+                                    selected
+                                {% endif %}
+                            >
+                                🟠 Primljen
+                            </option>
+
+
+                            <option
+                                value="U radu"
+                                {% if order['status'] == 'U radu' %}
+                                    selected
+                                {% endif %}
+                            >
+                                🔵 U radu
+                            </option>
+
+
+                            <option
+                                value="Završen"
+                                {% if order['status'] == 'Završen' %}
+                                    selected
+                                {% endif %}
+                            >
+                                🟢 Završen
+                            </option>
+
+
+                            <option
+                                value="Preuzet"
+                                {% if order['status'] == 'Preuzet' %}
+                                    selected
+                                {% endif %}
+                            >
+                                ⚫ Preuzet
+                            </option>
+
+
+                        </select>
+
+
+                        <button
+                            type="submit"
+                            class="gray-button"
+                        >
+                            🔄 Sačuvaj status
+                        </button>
+
+                    </form>
+
+
+                    <!-- BRISANJE -->
+
+                    <div class="actions">
+
+
+                        <form
+                            action="/obrisi-nalog/{{ order['id'] }}"
+                            method="POST"
+                            onsubmit="return confirm(
+                                'Da li ste sigurni da želite da obrišete ovaj servisni nalog? Iskorišćeni delovi će biti vraćeni na lager.'
+                            );"
+                        >
+
+                            <button
+                                type="submit"
+                                class="red-button"
+                            >
+                                🗑️ Obriši nalog
+                            </button>
+
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                📋 Još nema servisnih naloga za ovo vozilo.
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- =========================================
+         STARA SERVISNA ISTORIJA
+    ========================================== -->
+
+    <div class="card">
+
+        <h2>
+            📜 Servisna istorija
+        </h2>
+
+
+        <!-- DODAVANJE STAROG SERVISA -->
+
+        <form
+            action="/dodaj-servis/{{ vehicle['id'] }}"
+            method="POST"
+        >
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        📅 Datum
+                    </label>
+
+                    <input
+                        type="date"
+                        name="datum"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        💰 Cena
+                    </label>
+
+                    <input
+                        type="number"
+                        name="cena"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <label>
+                📝 Opis servisa
+            </label>
+
+            <textarea
+                name="opis"
+                placeholder="Npr. Zamena ulja i filtera..."
+                required
+            ></textarea>
+
+
+            <button
+                type="submit"
+                class="green-button"
+            >
+                ➕ Dodaj servis u istoriju
+            </button>
+
+
+        </form>
+
+
+        <br>
+
+
+        <!-- LISTA STARIH SERVISA -->
+
+        {% if services %}
+
+
+            {% for service in services %}
+
+
+                <div class="order">
+
+
+                    <div class="order-header">
+
+                        <h3>
+                            🔧 {{ service['opis'] }}
+                        </h3>
+
+                        <strong>
+                            {{ "%.2f"|format(service['cena']) }}
+                            RSD
+                        </strong>
+
+                    </div>
+
+
+                    <p>
+
+                        📅
+
+                        <strong>
+                            Datum:
+                        </strong>
+
+                        {{ service['datum'] }}
+
+                    </p>
+
+
+                    <form
+                        action="/obrisi-servis/{{ service['id'] }}"
+                        method="POST"
+                        onsubmit="return confirm(
+                            'Da li ste sigurni da želite da obrišete ovaj servis?'
+                        );"
+                    >
+
+                        <button
+                            type="submit"
+                            class="red-button"
+                        >
+                            🗑️ Obriši
+                        </button>
+
+                    </form>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                📜 Nema prethodne servisne istorije.
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- NAZAD -->
+
+    <div style="text-align:center; margin:30px 0;">
+
+        <a
+            href="/"
+            style="
+                text-decoration:none;
+                color:#2563eb;
+                font-weight:bold;
+            "
+        >
+            ← Nazad na vozila
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+    // =========================================
+    // DODAVANJE NOVOG REDA ZA DEO
+    // =========================================
+
+    function dodajRed() {
+
+        const container =
+            document.getElementById(
+                "parts-container"
+            );
+
+        const prviRed =
+            container.querySelector(
+                ".part-row"
+            );
+
+        const noviRed =
+            prviRed.cloneNode(true);
+
+        noviRed
+            .querySelector(
+                ".part-select"
+            )
+            .value = "";
+
+        noviRed
+            .querySelector(
+                ".part-quantity"
+            )
+            .value = 1;
+
+        container.appendChild(
+            noviRed
+        );
+
+        azurirajCenu();
+    }
+
+
+    // =========================================
+    // BRISANJE REDA
+    // =========================================
+
+    function obrisiRed(button) {
+
+        const container =
+            document.getElementById(
+                "parts-container"
+            );
+
+        const red =
+            button.closest(
+                ".part-row"
+            );
+
+        const sviRedovi =
+            container.querySelectorAll(
+                ".part-row"
+            );
+
+        if (sviRedovi.length > 1) {
+
+            red.remove();
+
+        } else {
+
+            red
+                .querySelector(
+                    ".part-select"
+                )
+                .value = "";
+
+            red
+                .querySelector(
+                    ".part-quantity"
+                )
+                .value = 1;
+        }
+
+        azurirajCenu();
+    }
+
+
+    // =========================================
+    // RAČUNANJE CENE
+    // =========================================
+
+    function azurirajCenu() {
+
+        let cenaDelova = 0;
+
+        const redovi =
+            document.querySelectorAll(
+                ".part-row"
+            );
+
+
+        redovi.forEach(function(red) {
+
+            const select =
+                red.querySelector(
+                    ".part-select"
+                );
+
+            const quantityInput =
+                red.querySelector(
+                    ".part-quantity"
+                );
+
+
+            if (!select || !quantityInput) {
+
+                return;
+
+            }
+
+
+            const selectedOption =
+                select.options[
+                    select.selectedIndex
+                ];
+
+
+            if (
+                selectedOption &&
+                selectedOption.value
+            ) {
+
+                const price =
+                    parseFloat(
+                        selectedOption.dataset.price
+                    ) || 0;
+
+
+                const quantity =
+                    parseInt(
+                        quantityInput.value
+                    ) || 0;
+
+
+                cenaDelova +=
+                    price * quantity;
+
+            }
+
+        });
+
+
+        const cenaRada =
+            parseFloat(
+                document.getElementById(
+                    "cena-rada"
+                ).value
+            ) || 0;
+
+
+        const ukupno =
+            cenaDelova + cenaRada;
+
+
+        document.getElementById(
+            "cena-delova"
+        ).textContent =
+            cenaDelova.toFixed(2);
+
+
+        document.getElementById(
+            "prikaz-cena-rada"
+        ).textContent =
+            cenaRada.toFixed(2);
+
+
+        document.getElementById(
+            "ukupna-cena"
+        ).textContent =
+            ukupno.toFixed(2);
+
+    }
+
+
+    // =========================================
+    // PROVERA LAGERA PRE SLANJA
+    // =========================================
+
+    document
+        .getElementById(
+            "service-order-form"
+        )
+        .addEventListener(
+            "submit",
+            function(event) {
+
+                const redovi =
+                    document.querySelectorAll(
+                        ".part-row"
+                    );
+
+                const ukupnoPoDelu = {};
+
+                let greska = "";
+
+
+                redovi.forEach(function(red) {
+
+                    const select =
+                        red.querySelector(
+                            ".part-select"
+                        );
+
+                    const quantityInput =
+                        red.querySelector(
+                            ".part-quantity"
+                        );
+
+
+                    if (
+                        !select ||
+                        !quantityInput
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const partId =
+                        select.value;
+
+
+                    if (!partId) {
+
+                        return;
+
+                    }
+
+
+                    const option =
+                        select.options[
+                            select.selectedIndex
+                        ];
+
+
+                    const lager =
+                        parseInt(
+                            option.dataset.stock
+                        ) || 0;
+
+
+                    const quantity =
+                        parseInt(
+                            quantityInput.value
+                        ) || 0;
+
+
+                    if (
+                        quantity <= 0
+                    ) {
+
+                        greska =
+                            "Količina dela mora biti najmanje 1.";
+
+                        return;
+
+                    }
+
+
+                    if (
+                        !ukupnoPoDelu[partId]
+                    ) {
+
+                        ukupnoPoDelu[partId] = 0;
+
+                    }
+
+
+                    ukupnoPoDelu[partId] +=
+                        quantity;
+
+
+                    if (
+                        ukupnoPoDelu[partId]
+                        >
+                        lager
+                    ) {
+
+                        greska =
+                            "Nema dovoljno dela na lageru. Proverite količine.";
+
+                    }
+
+                });
+
+
+                if (greska) {
+
+                    event.preventDefault();
+
+                    alert(greska);
+
+                    return;
+
+                }
+
+            }
+        );
+
+
+    // Prvi obračun
+
+    azurirajCenu();
+
+</script>
+
+
+</body>
+
+</html>

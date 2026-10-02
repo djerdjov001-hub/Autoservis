@@ -1,0 +1,674 @@
+
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Auto Servis</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f4f6f8;
+
+            color: #222;
+        }
+
+        .container {
+
+            width: 92%;
+
+            max-width: 1200px;
+
+            margin: 40px auto;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .header {
+
+            background: #1f2937;
+
+            color: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+
+            margin: 0 0 10px;
+
+            font-size: 32px;
+        }
+
+        .header p {
+
+            margin: 0;
+
+            color: #d1d5db;
+
+            font-size: 16px;
+        }
+
+
+        /* ==============================
+           GORNJA DUGMAD
+        ============================== */
+
+        .top-buttons {
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 25px;
+        }
+
+        .top-buttons a {
+
+            text-decoration: none;
+
+            color: white;
+
+            padding: 13px 20px;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+        .top-buttons a:hover {
+
+            transform: translateY(-2px);
+
+            opacity: 0.9;
+        }
+
+        .add-button {
+
+            background: #2563eb;
+        }
+
+        .mechanics-button {
+
+            background: #7c3aed;
+        }
+
+        .parts-button {
+
+            background: #059669;
+        }
+
+        .dashboard-button {
+
+            background: #d97706;
+        }
+
+
+        /* ==============================
+           NASLOV VOZILA
+        ============================== */
+
+        .section-title {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .section-title h2 {
+
+            margin: 0;
+
+            font-size: 24px;
+        }
+
+
+        /* ==============================
+           VOZILA
+        ============================== */
+
+        .vehicles {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(300px, 1fr));
+
+            gap: 20px;
+        }
+
+        .vehicle {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+
+            border: 1px solid #e5e7eb;
+        }
+
+        .vehicle h3 {
+
+            margin-top: 0;
+
+            margin-bottom: 18px;
+
+            font-size: 21px;
+
+            color: #1f2937;
+        }
+
+        .vehicle-info {
+
+            margin-bottom: 8px;
+
+            color: #4b5563;
+
+            line-height: 1.5;
+        }
+
+        .vehicle-info strong {
+
+            color: #222;
+        }
+
+
+        /* ==============================
+           DUGMAD ZA VOZILO
+        ============================== */
+
+        .actions {
+
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+            margin-top: 20px;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .actions a {
+
+            text-decoration: none;
+        }
+
+        .actions button {
+
+            border: none;
+
+            border-radius: 8px;
+
+            padding: 10px 14px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: white;
+
+            transition: 0.2s;
+        }
+
+        .actions button:hover {
+
+            opacity: 0.9;
+
+            transform: translateY(-1px);
+        }
+
+        .service-button {
+
+            background: #059669;
+        }
+
+        .edit-button {
+
+            background: #f59e0b;
+        }
+
+        .delete-button {
+
+            background: #dc2626;
+        }
+
+
+        /* ==============================
+           PRAZNA LISTA
+        ============================== */
+
+        .empty {
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 15px;
+
+            text-align: center;
+
+            color: #6b7280;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty-icon {
+
+            font-size: 45px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 35px;
+
+            padding: 20px;
+
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+
+        /* ==============================
+           MOBILNI PRIKAZ
+        ============================== */
+
+        @media (max-width: 600px) {
+
+            .container {
+
+                width: 94%;
+
+                margin: 20px auto;
+            }
+
+            .header {
+
+                padding: 22px;
+            }
+
+            .header h1 {
+
+                font-size: 26px;
+            }
+
+            .top-buttons {
+
+                flex-direction: column;
+            }
+
+            .top-buttons a {
+
+                text-align: center;
+
+                width: 100%;
+            }
+
+            .vehicles {
+
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+
+                flex-direction: column;
+            }
+
+            .actions a,
+            .actions button,
+            .actions form {
+
+                width: 100%;
+            }
+
+            .actions button {
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ==============================
+         HEADER
+    ============================== -->
+
+    <div class="header">
+
+        <h1>
+            🚗 Auto Servis
+        </h1>
+
+        <p>
+            Sistem za upravljanje servisom automobila
+        </p>
+
+    </div>
+
+
+    <!-- ==============================
+         GORNJA NAVIGACIJA
+    ============================== -->
+
+    <div class="top-buttons">
+
+        <a href="/dodaj-vozilo"
+           class="add-button">
+
+            ➕ Dodaj vozilo
+
+        </a>
+
+
+        <a href="/mehanicari"
+           class="mechanics-button">
+
+            👨‍🔧 Mehaničari
+
+        </a>
+
+
+        <a href="/delovi"
+           class="parts-button">
+
+            📦 Lager
+
+        </a>
+
+
+        <a href="/dashboard"
+           class="dashboard-button">
+
+            📊 Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- ==============================
+         NASLOV
+    ============================== -->
+
+    <div class="section-title">
+
+        <h2>
+            🚘 Vozila u servisu
+        </h2>
+
+    </div>
+
+
+    <!-- ==============================
+         LISTA VOZILA
+    ============================== -->
+
+    {% if vehicles %}
+
+        <div class="vehicles">
+
+
+            {% for vehicle in vehicles %}
+
+
+                <div class="vehicle">
+
+
+                    <h3>
+
+                        🚗
+
+                        {{ vehicle['marka'] }}
+
+                        {{ vehicle['model'] }}
+
+                    </h3>
+
+
+                    <div class="vehicle-info">
+
+                        🪪
+
+                        <strong>
+                            Registracija:
+                        </strong>
+
+                        {{ vehicle['registracija'] }}
+
+                    </div>
+
+
+                    <div class="vehicle-info">
+
+                        📅
+
+                        <strong>
+                            Godište:
+                        </strong>
+
+                        {{ vehicle['godiste'] or '-' }}
+
+                    </div>
+
+
+                    <div class="vehicle-info">
+
+                        🛣️
+
+                        <strong>
+                            Kilometraža:
+                        </strong>
+
+                        {{ vehicle['kilometraza'] or '-' }}
+
+                        km
+
+                    </div>
+
+
+                    <div class="vehicle-info">
+
+                        👤
+
+                        <strong>
+                            Vlasnik:
+                        </strong>
+
+                        {{ vehicle['vlasnik'] }}
+
+                    </div>
+
+
+                    <!-- ==============================
+                         AKCIJE
+                    ============================== -->
+
+                    <div class="actions">
+
+
+                        <a href="/vozilo/{{ vehicle['id'] }}">
+
+                            <button
+                                type="button"
+                                class="service-button">
+
+                                🔧 Servis
+
+                            </button>
+
+                        </a>
+
+
+                        <a href="/izmeni-vozilo/{{ vehicle['id'] }}">
+
+                            <button
+                                type="button"
+                                class="edit-button">
+
+                                ✏️ Izmeni
+
+                            </button>
+
+                        </a>
+
+
+                        <form
+                            action="/obrisi-vozilo/{{ vehicle['id'] }}"
+                            method="POST"
+
+                            onsubmit="return confirm(
+                                'Da li ste sigurni da želite da obrišete ovo vozilo?'
+                            );"
+
+                            style="display: inline;">
+
+                            <button
+                                type="submit"
+                                class="delete-button">
+
+                                🗑️ Obriši
+
+                            </button>
+
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- ==============================
+             NEMA VOZILA
+        ============================== -->
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🚗
+            </div>
+
+            <h2>
+                Trenutno nema vozila
+            </h2>
+
+            <p>
+                Dodajte prvo vozilo kako biste
+                počeli sa vođenjem servisa.
+            </p>
+
+            <a
+                href="/dodaj-vozilo"
+                class="add-button"
+                style="
+                    display: inline-block;
+                    text-decoration: none;
+                    color: white;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    font-weight: bold;
+                    margin-top: 10px;
+                ">
+
+                ➕ Dodaj prvo vozilo
+
+            </a>
+
+        </div>
+
+
+    {% endif %}
+
+
+    <!-- ==============================
+         FOOTER
+    ============================== -->
+
+    <div class="footer">
+
+        🚗 Auto Service Management System
+
+        <br>
+
+        Flask + SQLite
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+

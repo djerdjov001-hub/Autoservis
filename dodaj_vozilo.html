@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dodaj vozilo - Auto Servis</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 25px 40px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>🚗 Auto Servis</h1>
+
+</header>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Dodaj novo vozilo</h2>
+
+        <form method="POST">
+
+
+            <label for="marka">
+                Marka
+            </label>
+
+            <input
+                type="text"
+                id="marka"
+                name="marka"
+                placeholder="Npr. Volkswagen"
+                required
+            >
+
+
+            <label for="model">
+                Model
+            </label>
+
+            <input
+                type="text"
+                id="model"
+                name="model"
+                placeholder="Npr. Golf 5"
+                required
+            >
+
+
+            <label for="registracija">
+                Registracija
+            </label>
+
+            <input
+                type="text"
+                id="registracija"
+                name="registracija"
+                placeholder="Npr. VS123AA"
+                required
+            >
+
+
+            <label for="godiste">
+                Godište
+            </label>
+
+            <input
+                type="number"
+                id="godiste"
+                name="godiste"
+                placeholder="Npr. 2008"
+            >
+
+
+            <label for="kilometraza">
+                Kilometraža
+            </label>
+
+            <input
+                type="number"
+                id="kilometraza"
+                name="kilometraza"
+                placeholder="Npr. 245000"
+            >
+
+
+            <label for="vlasnik">
+                Vlasnik
+            </label>
+
+            <input
+                type="text"
+                id="vlasnik"
+                name="vlasnik"
+                placeholder="Ime i prezime vlasnika"
+                required
+            >
+
+
+            <button type="submit">
+                Sačuvaj vozilo
+            </button>
+
+
+        </form>
+
+
+        <a class="back" href="/">
+            ← Nazad na vozila
+        </a>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

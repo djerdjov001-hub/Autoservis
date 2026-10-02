@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Izmena dela</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #374151;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            ✏️ Izmeni rezervni deo
+        </h1>
+
+
+        <form method="POST">
+
+
+            <label>
+                Naziv dela
+            </label>
+
+            <input
+                type="text"
+                name="naziv"
+                value="{{ part['naziv'] }}"
+                required
+            >
+
+
+            <label>
+                Proizvođač
+            </label>
+
+            <input
+                type="text"
+                name="proizvodjac"
+                value="{{ part['proizvodjac'] or '' }}"
+            >
+
+
+            <label>
+                Šifra dela
+            </label>
+
+            <input
+                type="text"
+                name="sifra"
+                value="{{ part['sifra'] or '' }}"
+            >
+
+
+            <label>
+                Količina
+            </label>
+
+            <input
+                type="number"
+                name="kolicina"
+                min="0"
+                value="{{ part['kolicina'] }}"
+                required
+            >
+
+
+            <label>
+                Cena po komadu (RSD)
+            </label>
+
+            <input
+                type="number"
+                name="cena"
+                min="0"
+                step="0.01"
+                value="{{ part['cena'] }}"
+                required
+            >
+
+
+            <button type="submit">
+
+                💾 Sačuvaj izmene
+
+            </button>
+
+
+        </form>
+
+
+        <a
+            href="/delovi"
+            class="back"
+        >
+            ← Nazad na lager
+        </a>
+
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mehaničari</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 10px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 11px 16px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .add-button {
+            background: #2563eb;
+            color: white;
+        }
+
+        .add-button:hover {
+            background: #1d4ed8;
+        }
+
+        .mechanic {
+            border: 1px solid #e5e7eb;
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .mechanic h3 {
+            margin-top: 0;
+        }
+
+        .mechanic p {
+            margin: 8px 0;
+        }
+
+        .actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-button {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .delete-button {
+            background: #dc2626;
+            color: white;
+        }
+
+        .back-button {
+            display: inline-block;
+            text-decoration: none;
+            background: #374151;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+        }
+
+        .empty {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            color: #6b7280;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>👨‍🔧 Mehaničari</h1>
+
+        <p>
+            Upravljanje zaposlenima u auto servisu
+        </p>
+
+    </div>
+
+
+    <!-- DODAVANJE -->
+
+    <div class="card">
+
+        <h2>➕ Dodaj mehaničara</h2>
+
+        <form
+            action="/dodaj-mehanicara"
+            method="POST"
+        >
+
+            <label>
+                Ime
+            </label>
+
+            <input
+                type="text"
+                name="ime"
+                placeholder="Marko"
+                required
+            >
+
+
+            <label>
+                Prezime
+            </label>
+
+            <input
+                type="text"
+                name="prezime"
+                placeholder="Marković"
+                required
+            >
+
+
+            <label>
+                Telefon
+            </label>
+
+            <input
+                type="text"
+                name="telefon"
+                placeholder="064/123-456"
+            >
+
+
+            <label>
+                Specijalizacija
+            </label>
+
+            <input
+                type="text"
+                name="specijalizacija"
+                placeholder="Auto mehaničar"
+            >
+
+
+            <button
+                type="submit"
+                class="add-button"
+            >
+                💾 Sačuvaj mehaničara
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- LISTA -->
+
+    <div class="card">
+
+        <h2>📋 Lista mehaničara</h2>
+
+        {% if mechanics %}
+
+            {% for mechanic in mechanics %}
+
+                <div class="mechanic">
+
+                    <h3>
+                        👨‍🔧
+                        {{ mechanic['ime'] }}
+                        {{ mechanic['prezime'] }}
+                    </h3>
+
+                    <p>
+                        📞
+                        <strong>Telefon:</strong>
+                        {{ mechanic['telefon'] or '-' }}
+                    </p>
+
+                    <p>
+                        🔧
+                        <strong>Specijalizacija:</strong>
+                        {{ mechanic['specijalizacija'] or '-' }}
+                    </p>
+
+
+                    <div class="actions">
+
+                        <a
+                            href="/izmeni-mehanicara/{{ mechanic['id'] }}"
+                        >
+                            <button
+                                type="button"
+                                class="edit-button"
+                            >
+                                ✏️ Izmeni
+                            </button>
+                        </a>
+
+
+                        <form
+                            action="/obrisi-mehanicara/{{ mechanic['id'] }}"
+                            method="POST"
+                            onsubmit="return confirm('Da li ste sigurni da želite da obrišete ovog mehaničara?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="delete-button"
+                            >
+                                🗑️ Obriši
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                Trenutno nema unetih mehaničara.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <a
+        href="/"
+        class="back-button"
+    >
+        ← Nazad na vozila
+    </a>
+
+</div>
+
+</body>
+
+</html>
+

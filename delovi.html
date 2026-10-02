@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Lager delova</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 10px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 11px 16px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .save-button {
+            background: #2563eb;
+            color: white;
+        }
+
+        .save-button:hover {
+            background: #1d4ed8;
+        }
+
+        .part {
+            border: 1px solid #e5e7eb;
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .part h3 {
+            margin-top: 0;
+        }
+
+        .part p {
+            margin: 8px 0;
+        }
+
+        .actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .edit-button {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .delete-button {
+            background: #dc2626;
+            color: white;
+        }
+
+        .back-button {
+            display: inline-block;
+            text-decoration: none;
+            background: #374151;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+        }
+
+        .low-stock {
+            background: #fff7ed;
+            border: 1px solid #fb923c;
+        }
+
+        .warning {
+            color: #c2410c;
+            font-weight: bold;
+        }
+
+        .empty {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            color: #6b7280;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>
+            🔩 Lager delova
+        </h1>
+
+        <p>
+            Upravljanje rezervnim delovima auto servisa
+        </p>
+
+    </div>
+
+
+    <!-- DODAVANJE DELA -->
+
+    <div class="card">
+
+        <h2>
+            ➕ Dodaj rezervni deo
+        </h2>
+
+        <form
+            action="/dodaj-deo"
+            method="POST"
+        >
+
+            <label>
+                Naziv dela
+            </label>
+
+            <input
+                type="text"
+                name="naziv"
+                placeholder="Filter ulja"
+                required
+            >
+
+
+            <label>
+                Proizvođač
+            </label>
+
+            <input
+                type="text"
+                name="proizvodjac"
+                placeholder="Bosch"
+            >
+
+
+            <label>
+                Šifra dela
+            </label>
+
+            <input
+                type="text"
+                name="sifra"
+                placeholder="OF-123"
+            >
+
+
+            <label>
+                Količina
+            </label>
+
+            <input
+                type="number"
+                name="kolicina"
+                min="0"
+                value="0"
+                required
+            >
+
+
+            <label>
+                Cena po komadu (RSD)
+            </label>
+
+            <input
+                type="number"
+                name="cena"
+                min="0"
+                step="0.01"
+                value="0"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="save-button"
+            >
+                💾 Sačuvaj deo
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- LISTA -->
+
+    <div class="card">
+
+        <h2>
+            📦 Stanje lagera
+        </h2>
+
+
+        {% if parts %}
+
+            {% for part in parts %}
+
+                <div class="part
+                    {% if part['kolicina'] <= 3 %}
+                        low-stock
+                    {% endif %}
+                ">
+
+                    <h3>
+                        🔩 {{ part['naziv'] }}
+                    </h3>
+
+
+                    <p>
+
+                        <strong>
+                            Proizvođač:
+                        </strong>
+
+                        {{ part['proizvodjac'] or '-' }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Šifra:
+                        </strong>
+
+                        {{ part['sifra'] or '-' }}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Količina:
+                        </strong>
+
+                        {{ part['kolicina'] }}
+
+                        {% if part['kolicina'] <= 3 %}
+
+                            <span class="warning">
+                                ⚠️ Mala zaliha
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Cena:
+                        </strong>
+
+                        {{ "%.2f"|format(part['cena']) }}
+                        RSD
+
+                    </p>
+
+
+                    <div class="actions">
+
+
+                        <a
+                            href="/izmeni-deo/{{ part['id'] }}"
+                        >
+
+                            <button
+                                type="button"
+                                class="edit-button"
+                            >
+                                ✏️ Izmeni
+                            </button>
+
+                        </a>
+
+
+                        <form
+                            action="/obrisi-deo/{{ part['id'] }}"
+                            method="POST"
+                            onsubmit="return confirm('Da li ste sigurni da želite da obrišete ovaj deo?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="delete-button"
+                            >
+                                🗑️ Obriši
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+
+                📦 Trenutno nema delova u lageru.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- NAZAD -->
+
+    <a
+        href="/"
+        class="back-button"
+    >
+        ← Nazad na vozila
+    </a>
+
+
+</div>
+
+</body>
+
+</html>

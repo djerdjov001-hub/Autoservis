@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Izmeni vozilo</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #222;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #555;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>✏️ Izmeni vozilo</h1>
+
+        <form method="POST">
+
+            <label>Marka</label>
+
+            <input
+                type="text"
+                name="marka"
+                value="{{ vehicle['marka'] }}"
+                required
+            >
+
+
+            <label>Model</label>
+
+            <input
+                type="text"
+                name="model"
+                value="{{ vehicle['model'] }}"
+                required
+            >
+
+
+            <label>Registracija</label>
+
+            <input
+                type="text"
+                name="registracija"
+                value="{{ vehicle['registracija'] }}"
+                required
+            >
+
+
+            <label>Godište</label>
+
+            <input
+                type="number"
+                name="godiste"
+                value="{{ vehicle['godiste'] or '' }}"
+            >
+
+
+            <label>Kilometraža</label>
+
+            <input
+                type="number"
+                name="kilometraza"
+                value="{{ vehicle['kilometraza'] or '' }}"
+            >
+
+
+            <label>Vlasnik</label>
+
+            <input
+                type="text"
+                name="vlasnik"
+                value="{{ vehicle['vlasnik'] }}"
+                required
+            >
+
+
+            <button type="submit">
+                💾 Sačuvaj izmene
+            </button>
+
+        </form>
+
+        <a class="back" href="/">
+            ← Nazad na vozila
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
